@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+ 
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js">
+    </script>
+  </head>
+  <body>
+    <form method="POST" action="/usernodesearch">
+      <input
+            type="text"
+            name="name"
+            id="chosen-table"
+            placeholder="Enter User ID ..."
+          />
+          <input
+            type="text"
+            name="task_name"
+            id="chosen-task"
+            placeholder="Enter Genre..."
+          />
+          <input
+            type="text"
+            name="sub_task_name"
+            id="chosen-sub-task"
+            placeholder="Enter Release Year ..."
+          />
+          <input
+            type="text"
+            name="task_class"
+            id="chosen-tclass"
+            placeholder="Enter Movie Title ..."
+          />
+          <button class="btn waves-effect waves-light" 
+                  type="submit" 
+                  name="action">
+        Submit
+        <i class="material-icons right"> send </i>
+      </button>
+    </form>
+    <div id="mynetwork"></div>
+
+{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,134 @@
+{% extends 'base.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0" />
+    <title>Movie Reccommendation System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+    ></script>
+    <style type="text/css">
+      #mynetwork {
+        width: 600px;
+        height: 400px;
+        border: 1px solid lightgray;
+      }
+
+      .column {
+        float: left;
+      }
+
+      .left {
+        width: 25%;
+      }
+      .right {
+        width: 75%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="row">
+      <div class="column left">
+        <form method="POST" action="/usernodesearch">
+          <input
+            type="text"
+            name="name"
+            id="chosen-table"
+            placeholder="Enter User ID ..."
+          />
+          <input
+            type="text"
+            name="task_name"
+            id="chosen-task"
+            placeholder="Enter Genre..."
+          />
+          <input
+            type="text"
+            name="sub_task_name"
+            id="chosen-sub-task"
+            placeholder="Enter Release Year ..."
+          />
+          <input
+            type="text"
+            name="task_class"
+            id="chosen-tclass"
+            placeholder="Enter Movie Title ..."
+          />
+          <button
+            class="btn waves-effect waves-light"
+            type="submit"
+            name="action"
+          >
+            Submit
+            <i class="material-icons right"> send </i>
+          </button>
+        </form>
+      </div>
+      <div class="column right">
+        <div id="mynetwork"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+         var nodes = new vis.DataSet ([
+      {% for n_id,n_name in nodes %}
+      { id : {{n_id}}, label : '{{n_name}}' , shape : "box"} {{ ", " if not loop.last else ""}}
+      {% endfor %}
+          ]);
+
+          var edges = new vis.DataSet([
+              {% for src,tgt in edges %}
+              { from : {{src}}, to : {{tgt}} }{{ ", " if not loop.last else "" }}
+              {% endfor %}
+          ]);
+
+        /*
+      // create an array with nodes
+      var nodes = new vis.DataSet([
+        { id: 1, label: "Node 1" },
+        { id: 2, label: "Node 2" },
+        { id: 3, label: "Node 3" },
+        { id: 4, label: "Node 4" },
+        { id: 5, label: "Node 5" },
+      ]);
+
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 3 },
+        { from: 1, to: 2 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+      ]);
+        */
+      // create a network
+      var container = document.getElementById("mynetwork");
+
+      // provide the data in the vis format
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {};
+
+      // initialize your network!
+      var network = new vis.Network(container, data, options);
+    </script>
+    {% endblock %}
+  </body>
+</html>
